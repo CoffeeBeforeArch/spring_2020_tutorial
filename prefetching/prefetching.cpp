@@ -199,7 +199,7 @@ static void randomPrefetch(benchmark::State &s) {
   while (s.KeepRunning()) {
     for (int i = 0; i < N * N; i++) {
       // Pre-fetch an item for later
-      __builtin_prefetch(&v_out[v_in[i + 7]]);
+      __builtin_prefetch(&v_out[v_in[i + 5]]);
       v_out[v_in[i]]++;
     }
   }

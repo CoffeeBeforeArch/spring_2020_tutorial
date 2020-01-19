@@ -17,7 +17,7 @@ Dynamic allocations are expensive, and we'd like to avoid them (if possible). On
 ## Copy Elision
 Copying a large object can be expensive. Compiler writers understand this, and have been implementing optimization passes for copy elision to remove unnecessary copies. A common form of this is the Return Value Optimization (RVO) and Named Return Value Optimizaiton (NRVO). These deal with eliding the copy of an object during a function return. However, you're compiler can't always elide the copy! In this example, we will look at some source and disassembly of a simple function to better understand RVO, and when/where it may not be applicable
 
-[Source and Disassembly](https://godbolt.org/z/aQqHns)
+[Source and disassembly](https://godbolt.org/z/aQqHns)
 
 ### Relevant Links
 
@@ -29,9 +29,9 @@ Copying a large object can be expensive. Compiler writers understand this, and h
 
 Compilers are smart, and can exploit opportunties that even the most veteran of programmers can't notice. However, compilers aren't omniciant, and this can lead them to being overly conservative. A great example of this is aliasing. If a compiler can not figure out if two references point to the same piece of memory, it may not be able to perform certain optimizations (e.g, vectorization). In this example, we will look at the source and disassembly of a simple function, and measure the performance impact of aliasing on a simple matrix multiplication CUDA kernel.
 
-[Source and Disassembly](https://godbolt.org/z/oYev9z)
+[Source and disassembly](https://godbolt.org/z/oYev9z)
 
-[CUDA Matrix Multiplication](https://github.com/CoffeeBeforeArch/spring_2020_tutorial/tree/master/matrix_mul)
+[CUDA matrix multiplication source code](https://github.com/CoffeeBeforeArch/spring_2020_tutorial/tree/master/matrix_mul)
 
 ### Relevant Links
 [Strict aliasing in C++](https://gist.github.com/shafik/848ae25ee209f698763cffee272a58f8)
