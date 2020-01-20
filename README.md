@@ -48,12 +48,31 @@ Changing how we compile a program can change it's performance. One example of th
 
 [GCC's Link Time Optimization](https://gcc.gnu.org/onlinedocs/gccint/LTO-Overview.html)
 
-## Code Scheduling 
+## Branch Prediction
+
+## Code Scheduling
+
+The dynamic order of instructions can have a significant impact on performance. One example of this is with branches. Preferring one side of a branch over another can lead to significant performance differences. In this example we will look at using a compiler intrinsic to give hints as to what the "hot-side" of a branch is, and measure the performance difference.
+
+[Link to fast mod source code](https://github.com/CoffeeBeforeArch/spring_2020_tutorial/tree/master/instruction_scheduling)
+
+### Relevant Links
+
+[Anger Fog's Instruction Tables](https://www.agner.org/optimize/instruction_tables.pdf)
+
+[Chandler Carruth's 2015 CppCon Talk](https://youtu.be/nXaxk27zwlk)
 
 ## Cache Associativity
 
+Caches are critical to providing performance in modern processors. However, seemingly innacuous access patterns can lead to unexpected drops in performance. One example of this is a power-of-two stride. Modern caches are set-associative (each cache line gets mapped to a set, but there are only N ways where it can be placed). When we do a power of two set, we stumble across the relatively simple mapping of cache lines to sets. As we increase the power of two, the number of unique sets we access decreases, until every cache line we access maps to the same one. In this example, we will show how we can predict such access patterns for an arbitrary processor by looking at the cache organization details.
+
+[Link to associativity benchmark source code](https://github.com/CoffeeBeforeArch/spring_2020_tutorial/tree/master/associativity)
+
+
+### Relevant Links
+
 ## Prefetching
 
-## Branch Prediction
+
 
 ## SIMD Intrinsics - An Optimization Case Study
