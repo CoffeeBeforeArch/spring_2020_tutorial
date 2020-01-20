@@ -37,3 +37,15 @@ Compilers are smart, and can exploit opportunties that even the most veteran of 
 [Strict aliasing in C++](https://gist.github.com/shafik/848ae25ee209f698763cffee272a58f8)
 
 [Aliasing in CUDA](https://devblogs.nvidia.com/cuda-pro-tip-optimize-pointer-aliasing/)
+
+## Link Time Optimization (LTO)
+
+Changing how we compile a program can change it's performance. One example of this is when we break our compilation into multiple translation units. Because the compiler doesn't have the full context of the program, it may omit some optimizations. However, we can get some of these optimizations back at link time using Link Time Optimization (LTO). In this example, we will look at how the compiler optimizes a matrix multiplication benchmark in a single translation unit, split across two translation units, and split across multiple translation units with Link Time Optimization enabled.
+
+[CPU matrix multiplication source code]()
+
+### Relevant Links
+
+[GCC's Link Time Optimization](https://gcc.gnu.org/onlinedocs/gccint/LTO-Overview.html)
+
+
