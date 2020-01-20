@@ -25,13 +25,13 @@ Copying a large object can be expensive. Compiler writers understand this, and h
 
 [Arthur O'Dwyer's 2018 CppCon Talk](https://youtu.be/hA1WNtNyNbo)
 
-## Aliasing
+## Aliasing and Compiler Optimization
 
 Compilers are smart, and can exploit opportunties that even the most veteran of programmers can't notice. However, compilers aren't omniciant, and this can lead them to being overly conservative. A great example of this is aliasing. If a compiler can not figure out if two references point to the same piece of memory, it may not be able to perform certain optimizations (e.g, vectorization). In this example, we will look at the source and disassembly of a simple function, and measure the performance impact of aliasing on a simple matrix multiplication CUDA kernel.
 
 [Source and disassembly](https://godbolt.org/z/oYev9z)
 
-[CUDA matrix multiplication source code](https://github.com/CoffeeBeforeArch/spring_2020_tutorial/tree/master/matrix_mul)
+[CUDA matrix multiplication source code](https://github.com/CoffeeBeforeArch/spring_2020_tutorial/tree/master/aliasing)
 
 ### Relevant Links
 [Strict aliasing in C++](https://gist.github.com/shafik/848ae25ee209f698763cffee272a58f8)
@@ -42,10 +42,18 @@ Compilers are smart, and can exploit opportunties that even the most veteran of 
 
 Changing how we compile a program can change it's performance. One example of this is when we break our compilation into multiple translation units. Because the compiler doesn't have the full context of the program, it may omit some optimizations. However, we can get some of these optimizations back at link time using Link Time Optimization (LTO). In this example, we will look at how the compiler optimizes a matrix multiplication benchmark in a single translation unit, split across two translation units, and split across multiple translation units with Link Time Optimization enabled.
 
-[CPU matrix multiplication source code]()
+[CPU matrix multiplication source code](https://github.com/CoffeeBeforeArch/spring_2020_tutorial/tree/master/lto)
 
 ### Relevant Links
 
 [GCC's Link Time Optimization](https://gcc.gnu.org/onlinedocs/gccint/LTO-Overview.html)
 
+## Code Scheduling 
 
+## Cache Associativity
+
+## Prefetching
+
+## Branch Prediction
+
+## SIMD Intrinsics - An Optimization Case Study
