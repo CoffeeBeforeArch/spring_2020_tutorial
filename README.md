@@ -110,7 +110,7 @@ Not all access patterns have the same performance. As we showed in the cache ass
 
 The majority of comput hardware on modern processors is in the vector units. While compiler-based vectorization can typically achieve ~80% maximum performance, there may be situations where we need to take matter into our own hands. However, knowing _if_ you should be applying vectorization is another story. In this example, we will be examining the optimization of matrix-vector multiplication. We will explore whether we are compute or memory-bound, then manually apply some vectorization to boost performance.
 
-[Link to matrix-vector benchmark](https://github.com/CoffeeBeforeArch/spring_2020_tutorial/tree/master/matrix_vec)
+[Link to matrix-vector benchmark](https://github.com/CoffeeBeforeArch/spring_2020_tutorial/tree/master/matrix_vector)
 
 
 [Vectorized Dot Product Intrinsic](https://software.intel.com/sites/landingpage/IntrinsicsGuide/#text=_mm256_dp_ps&expand=2185)
