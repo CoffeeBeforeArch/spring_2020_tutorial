@@ -54,7 +54,7 @@ Changing how we compile a program can change it's performance. One example of th
 
 The dynamic order of instructions can have a significant impact on performance. One example of this is with branches. Preferring one side of a branch over another can lead to significant performance differences. In this example we will look at using a compiler intrinsic to give hints as to what the "hot-side" of a branch is, and measure the performance difference.
 
-[Link to fast mod source code](https://github.com/CoffeeBeforeArch/spring_2020_tutorial/tree/master/instruction_scheduling)
+[Link to modulo benchmark](https://github.com/CoffeeBeforeArch/spring_2020_tutorial/tree/master/instruction_scheduling)
 
 ### Relevant Links
 
@@ -71,8 +71,40 @@ Caches are critical to providing performance in modern processors. However, seem
 
 ### Relevant Links
 
+[What Every Programmer Should Know About Memory](https://people.freebsd.org/~lstewart/articles/cpumemory.pdf)
+
 ## Prefetching
 
+Not all access patterns have the same performance. As we showed in the cache associativity example, power-of-two stride can lead to unfortunate performance consequences. Another part of the hardware we should think about is the prefetcher. If we have a constant stride access pattern, our hardware prefetcher can begin fetching cache lines before we need them. However, more random access patterns do not get this benefit. In this example, we will be looking at a number of different access patterns to explore the limits of hardware prefetching, and briefly discuss software prefetching intrinsics.
 
+[Link to prefetching benchmark](https://github.com/CoffeeBeforeArch/spring_2020_tutorial/tree/master/prefetching)
+
+
+### Relevant Links
+
+[Stony Brook University lecture on prefetching](https://compas.cs.stonybrook.edu/~nhonarmand/courses/sp15/cse502/slides/13-prefetch.pdf)
+
+[What Every Programmer Should Know About Memory](https://people.freebsd.org/~lstewart/articles/cpumemory.pdf)
+
+## False Sharing
+
+2004 marked the beginning of the multi-core era, as Intel cancelled a 4GHz Pentium 4 processor in favor of dual core. Since that time, all major processor vendors have focused on multi-core performance over single-core. Optimizing multithreaded applications is difficult. Poorly implemented synchronization strategies can lead to execution times that look worse than if the program was single-threaded. However, some performance pitfalls can be more subtle. One of these is false sharing. In this example, we will show how false sharing can impact performance, and briefly discuss the role of coherence in performance. 
+
+[Link to false sharing benchmark](https://github.com/CoffeeBeforeArch/spring_2020_tutorial/tree/master/false_sharing)
+
+### Relevant Links
+
+[Intel blog on false sharing](https://software.intel.com/en-us/articles/avoiding-and-identifying-false-sharing-among-threads)
 
 ## SIMD Intrinsics - An Optimization Case Study
+
+The majority of comput hardware on modern processors is in the vector units. While compiler-based vectorization can typically achieve ~80% maximum performance, there may be situations where we need to take matter into our own hands. However, knowing _if_ you should be applying vectorization is another story. In this example, we will be examining the optimization of matrix-vector multiplication. We will explore whether we are compute or memory-bound, then manually apply some vectorization to boost performance.
+
+[Link to matrix-vector benchmark](https://github.com/CoffeeBeforeArch/spring_2020_tutorial/tree/master/matrix_vec)
+
+
+[Vectorized Dot Product Intrinsic](https://software.intel.com/sites/landingpage/IntrinsicsGuide/#text=_mm256_dp_ps&expand=2185)
+
+### Relevant Links
+
+[Intel Intrinsics Guide](https://software.intel.com/sites/landingpage/IntrinsicsGuide/#)
