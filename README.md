@@ -50,6 +50,16 @@ Changing how we compile a program can change it's performance. One example of th
 
 ## Branch Prediction
 
+Modern processors rely on branch predictors to keep the pipeline filled in the presence of branches. However, the programmer has a cruicial role in helping out the branch predictor. If we are able to write more predictable code, the branch predictor is able to speculate better. However, if our branches become somewhat random, we can suffer sever performance penalties. In this example we will take a look at the role of branch prediction with virtual functions/dynamic dispatch. We will benchmark different orderings of virtual function calls, and study the affects on the branch miss prediction rate.
+
+[Virtual function source code](https://github.com/CoffeeBeforeArch/spring_2020_tutorial/tree/master/branch_prediction)
+
+### Relevant Links
+
+[Agner Fog's Assembly Optimization Guide](https://www.agner.org/optimize/optimizing_assembly.pdf)
+
+[Agner Fog's Optimizing C++](https://www.agner.org/optimize/optimizing_cpp.pdf)
+
 ## Code Scheduling
 
 The dynamic order of instructions can have a significant impact on performance. One example of this is with branches. Preferring one side of a branch over another can lead to significant performance differences. In this example we will look at using a compiler intrinsic to give hints as to what the "hot-side" of a branch is, and measure the performance difference.
