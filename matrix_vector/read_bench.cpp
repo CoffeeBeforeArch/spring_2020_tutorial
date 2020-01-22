@@ -33,7 +33,7 @@ static void readBench(benchmark::State &s) {
   s.SetBytesProcessed(sizeof(float) * dim * dim * s.iterations());
 }
 // Register the benchmark
-BENCHMARK(readBench)->DenseRange(8, 10);
+BENCHMARK(readBench)->DenseRange(8, 10)->Unit(benchmark::kMicrosecond);
 
 // Benchmark main function
 BENCHMARK_MAIN();

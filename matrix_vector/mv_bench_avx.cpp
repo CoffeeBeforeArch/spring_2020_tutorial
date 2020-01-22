@@ -11,7 +11,7 @@ using namespace std;
 
 // Inlined function that uses intrinsic
 inline float prod_8(float *m_v, float *v) {
-  // Type punning with a union
+  // Input/Output data from the intrinsic
   float r[8];
   __m256 rv;
 
@@ -78,7 +78,7 @@ static void mvBench(benchmark::State &s) {
   s.SetBytesProcessed(sizeof(float) * dim * (dim + 2) * s.iterations());
 }
 // Register the benchmark
-BENCHMARK(mvBench)->DenseRange(8, 10);
+BENCHMARK(mvBench)->DenseRange(8, 10)->Unit(benchmark::kMicrosecond);
 
 // Benchmark main function
 BENCHMARK_MAIN();

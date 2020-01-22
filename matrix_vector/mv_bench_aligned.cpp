@@ -11,7 +11,7 @@ using namespace std;
 
 // Inlined function that uses intrinsic
 inline float prod_8(float *m_v, float *v) {
-  // Type punning with a union
+  // Input/Output data from the intrinsic
   float r[8];
   __m256 rv;
 
@@ -45,6 +45,7 @@ void matrix_vector(float *m, float *v, float *r, int dim) {
 
 // Helper allocator function for posix_memalign
 float *allocate(size_t bytes) {
+  // Allocate memory alligned to 64-bytes
   void *memory;
   if (posix_memalign(&memory, 64, bytes)) abort();
   return static_cast<float *>(memory);
@@ -85,7 +86,7 @@ static void mvBench(benchmark::State &s) {
   s.SetBytesProcessed(sizeof(float) * dim * (dim + 2) * s.iterations());
 }
 // Register the benchmark
-BENCHMARK(mvBench)->DenseRange(8, 10);
+BENCHMARK(mvBench)->DenseRange(8, 10)->Unit(benchmark::kMicrosecond);
 
 // Benchmark main function
 BENCHMARK_MAIN();
