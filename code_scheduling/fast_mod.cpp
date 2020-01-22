@@ -175,7 +175,7 @@ static void fastModHintUnroll(benchmark::State &s) {
 
   while (s.KeepRunning()) {
     // Unroll our fast mod loop by 4
-    for (int i = 0; i < N; i++) {
+    for (int i = 0; i < N; i += 4) {
       output[i] =
           __builtin_expect(input[i] >= ceil, 0) ? input[i] % ceil : input[i];
       output[i + 1] = __builtin_expect(input[i + 1] >= ceil, 0)
