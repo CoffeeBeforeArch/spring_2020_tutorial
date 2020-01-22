@@ -6,8 +6,6 @@
 #include <random>
 #include <vector>
 
-using namespace std;
-
 // Function for generating argument pairs
 static void custom_args(benchmark::internal::Benchmark *b) {
   for (int i = 1 << 4; i <= 1 << 10; i <<= 2) {
@@ -27,15 +25,15 @@ static void baseMod(benchmark::State &s) {
   int ceil = s.range(1);
 
   // Vector for input and output of modulo
-  vector<int> input;
-  vector<int> output;
+  std::vector<int> input;
+  std::vector<int> output;
   input.resize(N);
   output.resize(N);
 
   // Generate random inputs
-  mt19937 rng;
-  rng.seed(random_device()());
-  uniform_int_distribution<int> dist(0, 255);
+  std::mt19937 rng;
+  rng.seed(std::random_device()());
+  std::uniform_int_distribution<int> dist(0, 255);
   for (int &i : input) {
     i = dist(rng);
   }
@@ -59,21 +57,22 @@ static void unrollMod(benchmark::State &s) {
   int ceil = s.range(1);
 
   // Vector for input and output of modulo
-  vector<int> input;
-  vector<int> output;
+  std::vector<int> input;
+  std::vector<int> output;
   input.resize(N);
   output.resize(N);
 
   // Generate random inputs
-  mt19937 rng;
-  rng.seed(random_device()());
-  uniform_int_distribution<int> dist(0, 255);
+  std::mt19937 rng;
+  rng.seed(std::random_device()());
+  std::uniform_int_distribution<int> dist(0, 255);
   for (int &i : input) {
     i = dist(rng);
   }
 
   while (s.KeepRunning()) {
     // Compute the modulo for each element
+    // Unroll the loop by 4
     for (int i = 0; i < N; i += 4) {
       output[i] = input[i] % ceil;
       output[i + 1] = input[i + 1] % ceil;
@@ -94,15 +93,15 @@ static void fastMod(benchmark::State &s) {
   int ceil = s.range(1);
 
   // Vector for input and output of modulo
-  vector<int> input;
-  vector<int> output;
+  std::vector<int> input;
+  std::vector<int> output;
   input.resize(N);
   output.resize(N);
 
   // Generate random inputs
-  mt19937 rng;
-  rng.seed(random_device()());
-  uniform_int_distribution<int> dist(0, 255);
+  std::mt19937 rng;
+  rng.seed(std::random_device()());
+  std::uniform_int_distribution<int> dist(0, 255);
   for (int &i : input) {
     i = dist(rng);
   }
@@ -127,15 +126,15 @@ static void fastModHint(benchmark::State &s) {
   int ceil = s.range(1);
 
   // Vector for input and output of modulo
-  vector<int> input;
-  vector<int> output;
+  std::vector<int> input;
+  std::vector<int> output;
   input.resize(N);
   output.resize(N);
 
   // Generate random inputs
-  mt19937 rng;
-  rng.seed(random_device()());
-  uniform_int_distribution<int> dist(0, 255);
+  std::mt19937 rng;
+  rng.seed(std::random_device()());
+  std::uniform_int_distribution<int> dist(0, 255);
   for (int &i : input) {
     i = dist(rng);
   }
@@ -153,7 +152,7 @@ static void fastModHint(benchmark::State &s) {
 BENCHMARK(fastModHint)->Apply(custom_args);
 
 // Baseline for intuitive modulo operation
-static void fastModHintBad(benchmark::State &s) {
+static void fastModHintUnroll(benchmark::State &s) {
   // Number of elements
   int N = s.range(0);
 
@@ -161,30 +160,38 @@ static void fastModHintBad(benchmark::State &s) {
   int ceil = s.range(1);
 
   // Vector for input and output of modulo
-  vector<int> input;
-  vector<int> output;
+  std::vector<int> input;
+  std::vector<int> output;
   input.resize(N);
   output.resize(N);
 
   // Generate random inputs
-  mt19937 rng;
-  rng.seed(random_device()());
-  uniform_int_distribution<int> dist(0, 255);
+  std::mt19937 rng;
+  rng.seed(std::random_device()());
+  std::uniform_int_distribution<int> dist(0, 255);
   for (int &i : input) {
     i = dist(rng);
   }
 
   while (s.KeepRunning()) {
-    // DON'T compute the mod for each element
-    // Skip the expensive operation using a simple compare
+    // Unroll our fast mod loop by 4
     for (int i = 0; i < N; i++) {
       output[i] =
-          __builtin_expect(input[i] >= ceil, 1) ? input[i] % ceil : input[i];
+          __builtin_expect(input[i] >= ceil, 0) ? input[i] % ceil : input[i];
+      output[i + 1] = __builtin_expect(input[i + 1] >= ceil, 0)
+                          ? input[i + 1] % ceil
+                          : input[i + 1];
+      output[i + 2] = __builtin_expect(input[i + 2] >= ceil, 0)
+                          ? input[i + 2] % ceil
+                          : input[i + 2];
+      output[i + 3] = __builtin_expect(input[i + 3] >= ceil, 0)
+                          ? input[i + 3] % ceil
+                          : input[i + 3];
     }
   }
 }
 // Register the benchmark
-BENCHMARK(fastModHintBad)->Apply(custom_args);
+BENCHMARK(fastModHintUnroll)->Apply(custom_args);
 
 // Benchmark main function
 BENCHMARK_MAIN();
