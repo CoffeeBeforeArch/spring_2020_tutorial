@@ -9,7 +9,7 @@ using std::vector;
 
 // Benchmark for showing cache associativity
 static void L1_Bench(benchmark::State &s) {
-  // Const step size (4096kB)
+  // Const step size (4kB)
   const int step = 1 << 10;
 
   // Use a variable array size
